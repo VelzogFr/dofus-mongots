@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grimoire des Douze — Encyclopédie Dofus</title>
+  <meta name="description" content="Objets, panoplies, bestiaire et montures de Dofus." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script type="module" src="/js/layout.js"></script>
+  <script type="module" src="/js/pages/home.js"></script>
+</head>
+<body class="flex min-h-screen flex-col">
+  <header data-layout="header" class="min-h-16 bg-wood-dark"></header>
+
+  <section class="relative border-b-[3px] border-brass">
+    <div id="map" class="h-[560px] overflow-hidden bg-parch-deep sm:h-[440px]"></div>
+    <div class="absolute inset-x-4 top-6 flex flex-col gap-3.5 rounded-lg border-2 border-brass bg-parch-light/95 p-5 shadow-[0_18px_40px_rgba(43,29,16,.35)] sm:inset-x-auto sm:top-14 sm:left-[max(1.5rem,calc(50%-36rem))] sm:w-[540px] sm:p-7">
+      <span class="ornament">ENCYCLOPÉDIE</span>
+      <h1 class="m-0 text-3xl leading-tight sm:text-[40px]">Chaque objet du Monde des Douze, une page.</h1>
+      <form action="/objets.html" method="get" role="search" class="flex gap-2 rounded-md border border-brass-light bg-white p-1.5">
+        <label for="q" class="sr-only">Rechercher un objet</label>
+        <input id="q" name="q" type="search" placeholder="Rechercher un objet…" class="min-w-0 flex-1 border-0 bg-transparent px-3 text-base outline-none" />
+        <button type="submit" class="btn">Rechercher</button>
+      </form>
+      <div id="quick" class="flex flex-wrap gap-1.5"></div>
+      <div id="counts" class="flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted"></div>
+    </div>
+  </section>
+
+  <main class="flex flex-col gap-12 py-12">
+    <section class="page">
+      <div class="mb-5 flex flex-wrap items-baseline justify-between gap-2"><h2 class="section-title">Parcourir par type</h2><a href="/objets.html">Tous les objets</a></div>
+      <div id="types" class="grid grid-cols-3 gap-2 sm:grid-cols-[repeat(auto-fill,minmax(124px,1fr))] sm:gap-3"></div>
+    </section>
+
+    <section class="page">
+      <div class="mb-5 flex flex-wrap items-baseline justify-between gap-2"><h2 class="section-title">Panoplie à la une</h2><a href="/panoplies.html">Toutes les panoplies</a></div>
+      <div id="featured-set"></div>
+    </section>
+
+    <section class="page">
+      <div class="mb-5 flex flex-wrap items-baseline justify-between gap-2"><h2 class="section-title">Équipements</h2><a href="/objets.html?category=equipment">Voir les équipements</a></div>
+      <div id="items" class="grid gap-4 sm:grid-cols-[repeat(auto-fill,minmax(260px,1fr))]"></div>
+    </section>
+
+    <section class="border-y border-line bg-parch-deep py-12">
+      <div class="page">
+        <div class="mb-5 flex flex-wrap items-baseline justify-between gap-2"><h2 class="section-title">Bestiaire</h2><a href="/bestiaire.html">Tout le bestiaire</a></div>
+        <div id="monsters" class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4"></div>
+      </div>
+    </section>
+
+    <section class="page">
+      <div class="mb-5 flex flex-wrap items-baseline justify-between gap-2"><h2 class="section-title">Montures</h2><a href="/montures.html">Toutes les montures</a></div>
+      <div id="mounts" class="grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(150px,1fr))]"></div>
+    </section>
+  </main>
+
+  <footer data-layout="footer"></footer>
+</body>
+</html>

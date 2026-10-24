@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Objets — Grimoire des Douze</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script type="module" src="/js/layout.js"></script>
+  <script type="module" src="/js/pages/items.js"></script>
+</head>
+<body data-nav="objets" class="flex min-h-screen flex-col">
+  <header data-layout="header" class="min-h-16 bg-wood-dark"></header>
+
+  <main class="page flex flex-col gap-6 py-8">
+    <h1 class="m-0 text-3xl text-wood sm:text-4xl">Objets</h1>
+    <div class="flex flex-wrap items-start gap-6">
+      <form id="filters" class="panel flex w-full flex-col gap-5 p-5 lg:sticky lg:top-4 lg:w-64" role="search">
+        <div class="flex flex-col gap-1.5">
+          <label for="f-q" class="font-semibold">Nom</label>
+          <input id="f-q" name="q" type="search" class="field" placeholder="Coiffe, Gelano…" autocomplete="off" />
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="f-category" class="font-semibold">Catégorie</label>
+          <select id="f-category" name="category" class="field">
+            <option value="">Toutes</option>
+            <option value="equipment">Équipements</option>
+            <option value="resource">Ressources</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          <label for="f-type" class="font-semibold">Type d'équipement</label>
+          <select id="f-type" name="type" class="field"><option value="">Tous</option></select>
+        </div>
+        <fieldset class="m-0 flex flex-col gap-1.5 border-0 p-0">
+          <legend class="mb-1.5 font-semibold">Niveau</legend>
+          <div class="flex items-center gap-2">
+            <label for="f-min" class="sr-only">Niveau minimum</label>
+            <input id="f-min" name="minLevel" type="number" min="1" max="200" inputmode="numeric" class="field" placeholder="1" />
+            <span aria-hidden="true">–</span>
+            <label for="f-max" class="sr-only">Niveau maximum</label>
+            <input id="f-max" name="maxLevel" type="number" min="1" max="200" inputmode="numeric" class="field" placeholder="200" />
+          </div>
+        </fieldset>
+        <a href="/objets.html" class="btn-ghost">Réinitialiser</a>
+      </form>
+
+      <section aria-labelledby="results-title" class="flex min-w-0 flex-[999_1_560px] flex-col gap-4">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="results-title" class="m-0 text-xl text-wood">Résultats</h2>
+          <span id="count" class="text-sm text-muted" aria-live="polite"></span>
+        </div>
+        <div id="grid" class="grid gap-4 sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))]"></div>
+        <div id="pager"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer data-layout="footer"></footer>
+</body>
+</html>

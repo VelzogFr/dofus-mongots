@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/* Scan HTML/templates served by Express */
+@source "../../public";
+
+@theme {
+  --color-ink: #2b1d10;
+  --color-wood: #4a2f17;
+  --color-wood-dark: #2b1d10;
+  --color-gold: #e2b34a;
+  --color-gold-dark: #7a5212;
+  --color-brass: #a8741a;
+  --color-brass-light: #c9ae76;
+  --color-parch: #f3e7c9;
+  --color-parch-light: #fbf4e2;
+  --color-parch-deep: #eadbb4;
+  --color-line: #d9c9a3;
+  --color-muted: #6b5436;
+  --color-blood: #a3321f;
+
+  /* Couleurs de caracteristiques, lisibles sur parchemin */
+  --color-stat-vita: #5e6b12;
+  --color-stat-force: #7a4a12;
+  --color-stat-intel: #a3321f;
+  --color-stat-chance: #1f5e9c;
+  --color-stat-agi: #2e6b2e;
+  --color-stat-sag: #6b3d8f;
+  --color-stat-other: #4a3a26;
+
+  --font-display: "Cinzel", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-parch font-sans text-ink antialiased;
+  }
+  h1, h2, h3 {
+    @apply font-display;
+  }
+  a {
+    @apply text-gold-dark;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brass;
+  }
+}
+
+@layer components {
+  .page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+  .panel {
+    @apply rounded-lg border border-line bg-parch-light shadow-[0_2px_0_var(--color-line)];
+  }
+  .icon-tile {
+    @apply grid shrink-0 place-items-center rounded-lg border border-brass-light bg-[radial-gradient(circle_at_50%_40%,#fff7e0,var(--color-parch-deep))];
+  }
+  .chip {
+    @apply inline-flex min-h-8 items-center rounded-full border border-brass-light px-3 text-sm text-ink no-underline hover:bg-parch-deep;
+  }
+  .chip-on {
+    @apply border-wood bg-wood font-semibold text-parch-light hover:bg-wood;
+  }
+  .ornament {
+    @apply flex items-center gap-3 font-display text-xs tracking-[0.25em] text-brass before:h-px before:w-10 before:bg-brass after:h-px after:w-10 after:bg-brass;
+  }
+  .section-title {
+    @apply m-0 text-2xl text-wood sm:text-3xl;
+  }
+  .field {
+    @apply w-full min-w-0 rounded border border-brass-light bg-white px-3 py-2.5 text-ink;
+  }
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center rounded bg-gold-dark px-5 font-semibold text-parch-light no-underline hover:bg-wood;
+  }
+  .btn-ghost {
+    @apply inline-flex min-h-11 items-center justify-center rounded border border-gold-dark px-4 font-semibold text-gold-dark no-underline hover:bg-parch-deep;
+  }
+}

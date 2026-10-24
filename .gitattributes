@@ -1,0 +1,5 @@
+# Fins de ligne normalisees en LF dans le depot
+* text=auto eol=lf
+
+*.png binary
+*.ico binary

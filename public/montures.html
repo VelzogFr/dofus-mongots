@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Montures — Grimoire des Douze</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script type="module" src="/js/layout.js"></script>
+  <script type="module" src="/js/pages/mounts.js"></script>
+</head>
+<body data-nav="montures" class="flex min-h-screen flex-col">
+  <header data-layout="header" class="min-h-16 bg-wood-dark"></header>
+  <main class="page flex flex-col gap-6 py-8">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h1 class="m-0 text-3xl text-wood sm:text-4xl">Montures</h1>
+      <form id="filters" role="search" class="w-full sm:w-80">
+        <label for="f-q" class="sr-only">Rechercher une monture</label>
+        <input id="f-q" name="q" type="search" class="field" placeholder="Rechercher une monture…" autocomplete="off" />
+      </form>
+    </div>
+    <span id="count" class="text-sm text-muted" aria-live="polite"></span>
+    <div id="grid" class="grid grid-cols-2 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(160px,1fr))]"></div>
+    <div id="pager"></div>
+  </main>
+  <footer data-layout="footer"></footer>
+</body>
+</html>
