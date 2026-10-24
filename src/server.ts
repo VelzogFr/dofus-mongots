@@ -30,11 +30,7 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// Routes
-app.get('/', (_req, res) => {
-  res.send('API is running...');
-});
-
+// Routes (les pages, dont index.html sur "/", sont servies par express.static)
 app.use('/api/items', itemRoutes);
 app.use('/api/sets', setRoutes);
 app.use('/api/monsters', monsterRoutes);
