@@ -5,7 +5,6 @@ import { PUBLIC_FIELDS, firstString, nameFilter, paged, pagination } from '../..
 
 const router = Router();
 
-// GET /api/mounts?q=&family=&page=&limit=
 router.get('/', async (req, res) => {
   const family = firstString(req.query.family);
   const filter: Record<string, unknown> = { ...nameFilter(req.query.q) };

@@ -1,11 +1,8 @@
-// Helpers d'affichage. Toute donnee venant de l'API passe par esc() ou safeUrl().
 const ENTITIES = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 export const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ENTITIES[c]);
 
-// Images : uniquement des URL https (les documents pointent vers les API fan)
 export const safeUrl = (url) => (typeof url === 'string' && url.startsWith('https://') ? esc(url) : '');
 
-// Classes ecrites en entier pour que Tailwind les detecte
 const STAT_CLASSES = [
   [/vitalit/i, 'text-stat-vita'],
   [/force|terre/i, 'text-stat-force'],
@@ -16,8 +13,6 @@ const STAT_CLASSES = [
 ];
 export const statClass = (label) => STAT_CLASSES.find(([re]) => re.test(label))?.[1] ?? 'text-stat-other';
 export const statBg = (label) => statClass(label).replace('text-', 'bg-');
-// Variantes de fond listees pour le scan Tailwind :
-// bg-stat-vita bg-stat-force bg-stat-intel bg-stat-chance bg-stat-agi bg-stat-sag bg-stat-other
 
 export function fmtEffect(effect) {
   const text = effect.text.replace(/^(-?\d+) à (-?\d+)/, '$1 – $2');
@@ -95,7 +90,6 @@ export function pager(page, pages, hrefFor) {
     ${page > 1 ? link(page - 1, 'Précédent') : ''}${nums.join('')}${page < pages ? link(page + 1, 'Suivant') : ''}</nav>`;
 }
 
-// Parametres d'URL <-> etat de page (liens partageables)
 export const readParams = () => Object.fromEntries(new URLSearchParams(location.search));
 export function hrefWith(params) {
   const query = new URLSearchParams();

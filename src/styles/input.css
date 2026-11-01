@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* Scan HTML/templates served by Express */
 @source "../../public";
+@source inline("bg-stat-{vita,force,intel,chance,agi,sag,other}");
 
 @theme {
   --color-ink: #2b1d10;
@@ -18,7 +18,6 @@
   --color-muted: #6b5436;
   --color-blood: #a3321f;
 
-  /* Couleurs de caracteristiques, lisibles sur parchemin */
   --color-stat-vita: #5e6b12;
   --color-stat-force: #7a4a12;
   --color-stat-intel: #a3321f;

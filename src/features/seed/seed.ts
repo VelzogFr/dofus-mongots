@@ -1,5 +1,3 @@
-// Remplit MongoDB depuis les API fan : upsert par ankamaId, relancable sans doublons.
-// Usage : pnpm db:seed
 import mongoose, { type Model } from 'mongoose';
 import dotenv from 'dotenv';
 
@@ -14,7 +12,6 @@ import type { MonsterInput } from './dofusdb.js';
 
 dotenv.config();
 
-// Perimetre importe
 const SET_IDS = [1, 4];
 const EXTRA_EQUIPMENT = ['Gelano', 'Dofus Émeraude', 'Dofus Pourpre', 'Dofus Turquoise', 'Épée de Boisaille', 'Bottes de Klime'];
 const MONSTER_NAMES = ['Bouftou', 'Boufton Blanc', 'Chef de Guerre Bouftou', 'Bouftou Royal', 'Tofu', 'Craqueleur', 'Dragon Cochon', 'Larve Bleue'];
@@ -32,7 +29,6 @@ async function collectItemsAndSets() {
     else if (!equipment.has(hit.ankama_id)) equipment.set(hit.ankama_id, await dofusdude.fetchEquipment(hit.ankama_id));
   }
 
-  // Les ressources des recettes completent la collection items
   const resources = new Map<number, string>();
   for (const raw of equipment.values()) {
     for (const r of raw.recipe ?? []) if (!equipment.has(r.item_ankama_id)) resources.set(r.item_ankama_id, r.item_subtype);
@@ -54,14 +50,12 @@ async function collectMonsters(items: ItemInput[]): Promise<MonsterInput[]> {
     if (hit) raw.set(hit.id, hit);
     else console.warn(`monster not found: ${name}`);
   }
-  // Monstres qui lachent nos equipements, meme hors de la liste
   for (const item of items.filter((i) => i.category === 'equipment')) {
     for (const m of await dofusdb.findMonstersDropping(item.ankamaId)) if (!raw.has(m.id)) raw.set(m.id, m);
   }
   return Promise.all([...raw.values()].map((m) => dofusdb.toMonster(m, known)));
 }
 
-// Valide chaque document avec le schema, puis upsert par ankamaId
 async function upsert<T extends { ankamaId: number }>(model: Model<any>, docs: T[]): Promise<string> {
   await Promise.all(docs.map((doc) => new model(doc).validate()));
   await model.createIndexes();

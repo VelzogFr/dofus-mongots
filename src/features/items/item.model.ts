@@ -21,9 +21,7 @@ const itemSchema = new Schema(
     description: { type: String, default: null },
     image: { type: String, default: null },
     effects: { type: [effectSchema], default: [] },
-    // Reference vers sets.ankamaId
     setId: { type: Number, default: null },
-    // itemId : reference vers items.ankamaId
     recipe: { type: [recipeEntrySchema], default: [] },
   },
   { collection: 'items', timestamps: true },

@@ -14,7 +14,6 @@ const setSchema = new Schema(
     ankamaId: { type: Number, required: true, unique: true },
     name: { type: String, required: true, trim: true },
     level: { type: Number, required: true, min: 0 },
-    // References vers items.ankamaId
     itemIds: { type: [Number], default: [] },
     bonuses: { type: [setBonusSchema], default: [] },
   },
@@ -25,5 +24,4 @@ setSchema.index({ itemIds: 1 });
 setSchema.index({ name: 'text' }, { default_language: 'french' });
 
 export type EquipmentSetData = InferSchemaType<typeof setSchema>;
-// "Set" masquerait le Set natif de JavaScript
 export const EquipmentSet = model('EquipmentSet', setSchema);

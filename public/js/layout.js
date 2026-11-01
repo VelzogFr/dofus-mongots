@@ -1,4 +1,3 @@
-// En-tete et pied de page communs. La page indique sa rubrique via <body data-nav="...">.
 const NAV = [
   ['objets', '/objets.html', 'Objets'],
   ['panoplies', '/panoplies.html', 'Panoplies'],

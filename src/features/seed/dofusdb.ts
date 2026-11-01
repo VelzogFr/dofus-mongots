@@ -1,4 +1,3 @@
-// Client api.dofusdb.fr : bestiaire (api.dofusdu.de n'expose pas les monstres)
 const BASE_URL = 'https://api.dofusdb.fr';
 const GRADE_COUNT = 5;
 
@@ -57,7 +56,6 @@ export function fetchRaceName(id: number): Promise<string | null> {
 
 const searchMonsters = (query: string) => get<{ data: RawMonster[] }>(`/monsters?${query}&$limit=10&lang=fr`).then((r) => r.data);
 
-// Un nom peut designer plusieurs fiches : on garde le monstre du bestiaire, pas son invocation
 export async function findMonster(name: string): Promise<RawMonster | undefined> {
   const hits = await searchMonsters(`name.fr=${encodeURIComponent(name)}`);
   for (const m of hits) {
@@ -73,7 +71,6 @@ export async function findMonstersDropping(itemId: number): Promise<RawMonster[]
   return hits.filter((m) => !m.hideInBestiary);
 }
 
-// knownItemIds : seuls les drops vers des objets presents dans la collection items sont gardes
 export async function toMonster(raw: RawMonster, knownItemIds: ReadonlySet<number>): Promise<MonsterInput> {
   return {
     ankamaId: raw.id,
@@ -88,7 +85,6 @@ export async function toMonster(raw: RawMonster, knownItemIds: ReadonlySet<numbe
       .filter((d) => knownItemIds.has(d.objectId))
       .map((d) => ({
         itemId: d.objectId,
-        // L'API renvoie des flottants simple precision (1.0599999…) : arrondi au centieme
         rates: Array.from({ length: GRADE_COUNT }, (_, i) => Math.round((d[`percentDropForGrade${i + 1}`] ?? 0) * 100) / 100),
       })),
   };

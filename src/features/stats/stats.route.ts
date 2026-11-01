@@ -7,7 +7,6 @@ import { Mount } from '../mounts/mount.model.js';
 
 const router = Router();
 
-// GET /api/stats : compteurs affiches sur l'accueil
 router.get('/', async (_req, res) => {
   const [equipment, resources, sets, monsters, mounts] = await Promise.all([
     Item.countDocuments({ category: 'equipment' }),

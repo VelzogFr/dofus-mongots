@@ -1,7 +1,5 @@
-// Carte parchemin decorative de l'accueil (dessin original, sans toponymes)
 const INK = '#2b1d10';
 
-// Pseudo-aleatoire deterministe : la carte est identique a chaque chargement
 function rng(seed) {
   let s = seed >>> 0;
   return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;

@@ -11,7 +11,6 @@ const SUMMARY_FIELDS = { _id: 0, ankamaId: 1, name: 1, type: 1, level: 1, image:
 
 const MAX_IDS = 100;
 
-// GET /api/items?q=&category=&type=&setId=&minLevel=&maxLevel=&ids=1,2,3&page=&limit=
 router.get('/', async (req, res) => {
   const ids = firstString(req.query.ids)?.split(',').map((s) => parseAnkamaId(s.trim()));
   if (ids && (ids.length > MAX_IDS || ids.some((id) => id === null))) {
@@ -45,7 +44,6 @@ router.get('/', async (req, res) => {
   res.json(paged(items, total, page));
 });
 
-// GET /api/items/types : types d'equipement, avec compteur et icone du plus bas niveau
 router.get('/types', async (_req, res) => {
   const types = await Item.aggregate([
     { $match: { category: 'equipment', type: { $ne: null } } },
@@ -57,7 +55,6 @@ router.get('/types', async (_req, res) => {
   res.json(types);
 });
 
-// GET /api/items/:id : fiche complete (panoplie, recette, monstres qui la lachent)
 router.get('/:id', async (req, res) => {
   const id = parseAnkamaId(req.params.id);
   if (id === null) {

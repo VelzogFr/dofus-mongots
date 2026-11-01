@@ -19,7 +19,7 @@ function fillForm() {
 }
 
 async function load() {
-  const id = ++requestId; // ignore les reponses arrivees dans le desordre
+  const id = ++requestId;
   grid.innerHTML = skeleton(6, 'h-48');
   try {
     const res = await api('/items', { ...state, limit: PAGE_SIZE });
@@ -32,7 +32,6 @@ async function load() {
   }
 }
 
-// Un filtre modifie : retour page 1, URL mise a jour sans rechargement
 const onFilter = () => {
   state = Object.fromEntries(FIELDS.map((name) => [name, form.elements[name].value.trim()]));
   history.replaceState(null, '', hrefWith(state));

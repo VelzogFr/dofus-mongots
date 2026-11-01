@@ -1,4 +1,3 @@
-// Client api.dofusdu.de : objets, panoplies, ressources, montures (Dofus 3)
 const BASE_URL = 'https://api.dofusdu.de/dofus3/v1';
 const LANG = 'fr';
 
@@ -88,7 +87,6 @@ async function get<T>(path: string): Promise<T> {
   return (await res.json()) as T;
 }
 
-// Mentions techniques renvoyees comme effets, sans valeur pour un joueur
 const HIDDEN_EFFECT = /échangeable|special spell|attitude/i;
 
 function toEffects(raw: RawEffect[] | null | undefined): EffectInput[] {
@@ -137,7 +135,6 @@ export async function searchEquipment(query: string): Promise<RawItem | undefine
   return hits[0];
 }
 
-// Sous-type tel que renvoye par les recettes : "resources", "equipment", "consumables"...
 const SUBTYPE = /^[a-z-]+$/;
 
 export function fetchRecipeItem(subtype: string, id: number): Promise<RawItem> {

@@ -6,7 +6,6 @@ import { PUBLIC_FIELDS, firstString, nameFilter, optionalBool, optionalInt, page
 
 const router = Router();
 
-// GET /api/monsters?q=&race=&boss=&minLevel=&maxLevel=&page=&limit=
 router.get('/', async (req, res) => {
   const race = firstString(req.query.race);
   const boss = optionalBool(req.query.boss);
@@ -16,7 +15,6 @@ router.get('/', async (req, res) => {
   const filter: Record<string, unknown> = { ...nameFilter(req.query.q) };
   if (race) filter.race = race;
   if (boss !== undefined) filter.boss = boss;
-  // Au moins un grade dans la tranche de niveaux demandee
   if (minLevel !== undefined || maxLevel !== undefined) {
     filter.grades = {
       $elemMatch: { level: { ...(minLevel !== undefined && { $gte: minLevel }), ...(maxLevel !== undefined && { $lte: maxLevel }) } },
@@ -31,7 +29,6 @@ router.get('/', async (req, res) => {
   res.json(paged(monsters, total, page));
 });
 
-// GET /api/monsters/:id : fiche avec les objets lâchés resolus
 router.get('/:id', async (req, res) => {
   const id = parseAnkamaId(req.params.id);
   if (id === null) {

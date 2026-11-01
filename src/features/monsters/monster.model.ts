@@ -15,9 +15,7 @@ const gradeSchema = new Schema(
 
 const dropSchema = new Schema(
   {
-    // Reference vers items.ankamaId
     itemId: { type: Number, required: true },
-    // Taux de drop de base en %, un par grade
     rates: {
       type: [Number],
       required: true,

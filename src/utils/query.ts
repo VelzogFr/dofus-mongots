@@ -1,6 +1,3 @@
-// Lecture sure des parametres de requete (req.query est fourni par le client)
-
-// Champs internes jamais renvoyes par l'API
 export const PUBLIC_FIELDS = { _id: 0, __v: 0, createdAt: 0, updatedAt: 0 } as const;
 
 const MAX_SEARCH_LENGTH = 60;
@@ -30,7 +27,6 @@ export function optionalBool(value: unknown): boolean | undefined {
   return undefined;
 }
 
-// Identifiant de route : entier positif, sinon null
 export function parseAnkamaId(value: string | undefined): number | null {
   const n = Number(value);
   return Number.isSafeInteger(n) && n > 0 ? n : null;
@@ -38,7 +34,6 @@ export function parseAnkamaId(value: string | undefined): number | null {
 
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-// Recherche partielle, insensible a la casse, sur le nom
 export function nameFilter(q: unknown): Record<string, unknown> {
   const term = firstString(q)?.trim().slice(0, MAX_SEARCH_LENGTH);
   return term ? { name: { $regex: escapeRegex(term), $options: 'i' } } : {};

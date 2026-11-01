@@ -4,7 +4,6 @@ import { emptyState, errorState, esc, fmtEffect, iconTile, itemCard, monsterCard
 
 document.getElementById('map').innerHTML = mapSvg();
 
-// Chaque bloc se charge independamment : une erreur n'empeche pas les autres
 async function section(id, placeholder, render) {
   const el = document.getElementById(id);
   el.innerHTML = placeholder;

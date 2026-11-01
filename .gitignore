@@ -1,16 +1,12 @@
-# Dependances
 node_modules/
 
-# Environnement local (garder .env.example)
 .env
 .env.*
 !.env.example
 
-# Sorties de build
 dist/
 public/css/
 
-# Logs et OS
 *.log
 .DS_Store
 Thumbs.db

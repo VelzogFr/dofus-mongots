@@ -6,7 +6,6 @@ import { PUBLIC_FIELDS, nameFilter, paged, pagination, parseAnkamaId } from '../
 
 const router = Router();
 
-// GET /api/sets?q=&page=&limit=
 router.get('/', async (req, res) => {
   const filter = nameFilter(req.query.q);
   const page = pagination(req.query);
@@ -17,7 +16,6 @@ router.get('/', async (req, res) => {
   res.json(paged(sets, total, page));
 });
 
-// GET /api/sets/:id : panoplie avec ses objets complets
 router.get('/:id', async (req, res) => {
   const id = parseAnkamaId(req.params.id);
   if (id === null) {

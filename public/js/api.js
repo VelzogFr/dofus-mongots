@@ -1,4 +1,3 @@
-// Client de l'API Express (/api/*)
 export class ApiError extends Error {
   constructor(status, message) {
     super(message);
@@ -18,9 +17,8 @@ export async function api(path, params = {}) {
   return body;
 }
 
-const MAX_IDS = 100; // limite de /api/items?ids=
+const MAX_IDS = 100;
 
-// Recupere plusieurs objets par ankamaId (par paquets de 100), renvoie une Map
 export async function itemsById(ids) {
   const unique = [...new Set(ids)];
   const chunks = [];
