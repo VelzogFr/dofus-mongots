@@ -1,85 +1,11 @@
+import type { EffectInput, RawEffect } from '../../interfaces/effect.interface.js';
+import type { RawImages } from '../../interfaces/image.interface.js';
+import type { ItemInput, RawItem } from '../../interfaces/item.interface.js';
+import type { MountInput, RawMount } from '../../interfaces/mount.interface.js';
+import type { RawSet, SetInput } from '../../interfaces/set.interface.js';
+
 const BASE_URL = 'https://api.dofusdu.de/dofus3/v1';
 const LANG = 'fr';
-
-interface RawEffect {
-  int_minimum: number;
-  int_maximum: number;
-  type?: { name?: string };
-  formatted: string;
-}
-
-interface RawRecipeEntry {
-  item_ankama_id: number;
-  item_subtype: string;
-  quantity: number;
-}
-
-interface RawImages {
-  icon?: string;
-  sd?: string;
-}
-
-export interface RawItem {
-  ankama_id: number;
-  name: string;
-  type?: { name?: string };
-  level: number;
-  description?: string;
-  image_urls?: RawImages;
-  effects?: RawEffect[] | null;
-  parent_set?: { id: number } | null;
-  recipe?: RawRecipeEntry[] | null;
-}
-
-export interface RawSet {
-  ankama_id: number;
-  name: string;
-  equipment_ids: number[];
-  highest_equipment_level: number;
-  effects?: Record<string, RawEffect[] | null> | null;
-}
-
-interface RawMount {
-  ankama_id: number;
-  name: string;
-  family?: { name?: string };
-  image_urls?: RawImages;
-}
-
-export interface EffectInput {
-  label: string;
-  min: number;
-  max: number | null;
-  text: string;
-}
-
-export interface ItemInput {
-  ankamaId: number;
-  category: 'equipment' | 'resource';
-  name: string;
-  type: string | null;
-  level: number;
-  description: string | null;
-  image: string | null;
-  effects: EffectInput[];
-  setId: number | null;
-  recipe: { itemId: number; quantity: number }[];
-}
-
-export interface SetInput {
-  ankamaId: number;
-  name: string;
-  level: number;
-  itemIds: number[];
-  bonuses: { pieces: number; effects: EffectInput[] }[];
-}
-
-export interface MountInput {
-  ankamaId: number;
-  name: string;
-  family: string | null;
-  image: string | null;
-}
 
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`);
@@ -142,7 +68,13 @@ export function fetchRecipeItem(subtype: string, id: number): Promise<RawItem> {
   return get<RawItem>(`/${LANG}/items/${subtype}/${id}`);
 }
 
-export async function fetchMounts(count: number): Promise<MountInput[]> {
-  const page = await get<{ mounts: RawMount[] }>(`/${LANG}/mounts?page[size]=${count}`);
-  return page.mounts.map((m) => ({ ankamaId: m.ankama_id, name: m.name, family: m.family?.name ?? null, image: imageOf(m.image_urls) }));
+export async function fetchMounts(): Promise<MountInput[]> {
+  const page = await get<{ mounts: RawMount[] }>(`/${LANG}/mounts?page[size]=-1&fields[mount]=effects`);
+  return page.mounts.map((m) => ({
+    ankamaId: m.ankama_id,
+    name: m.name,
+    family: m.family?.name ?? null,
+    image: imageOf(m.image_urls),
+    effects: toEffects(m.effects),
+  }));
 }

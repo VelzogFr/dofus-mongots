@@ -1,39 +1,7 @@
+import type { MonsterInput, RawMonster } from '../../interfaces/monster.interface.js';
+
 const BASE_URL = 'https://api.dofusdb.fr';
 const GRADE_COUNT = 5;
-
-interface RawGrade {
-  grade: number;
-  level: number;
-  lifePoints: number;
-  actionPoints: number;
-  movementPoints: number;
-}
-
-interface RawDrop {
-  objectId: number;
-  [rate: `percentDropForGrade${number}`]: number;
-}
-
-export interface RawMonster {
-  id: number;
-  name: { fr: string };
-  race: number;
-  isBoss?: boolean;
-  hideInBestiary?: boolean;
-  img?: string;
-  grades: RawGrade[];
-  drops?: RawDrop[];
-}
-
-export interface MonsterInput {
-  ankamaId: number;
-  name: string;
-  race: string | null;
-  boss: boolean;
-  image: string | null;
-  grades: { grade: number; level: number; lifePoints: number; ap: number; mp: number }[];
-  drops: { itemId: number; rates: number[] }[];
-}
 
 async function get<T>(path: string): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`);

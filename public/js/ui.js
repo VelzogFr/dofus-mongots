@@ -16,7 +16,7 @@ export const statBg = (label) => statClass(label).replace('text-', 'bg-');
 
 export function fmtEffect(effect) {
   const text = effect.text.replace(/^(-?\d+) à (-?\d+)/, '$1 – $2');
-  return text.startsWith('-') ? text : `+${text}`;
+  return /^\d/.test(text) ? `+${text}` : text;
 }
 
 export const range = (a, b) => (a === b ? `${a}` : `${a} – ${b}`);
@@ -67,8 +67,8 @@ export function monsterCard(monster, items = new Map()) {
   </a>`;
 }
 
-export const mountCard = (mount) => `<div class="panel flex flex-col items-center gap-1 p-3 text-center text-sm">
-    ${img(mount.image, '', 'size-28 object-contain')}<span>${esc(mount.name)}</span><small class="text-xs text-muted">${esc(mount.family ?? '')}</small></div>`;
+export const mountCard = (mount) => `<a href="/monture.html?id=${mount.ankamaId}" class="panel flex flex-col items-center gap-1 p-3 text-center text-sm text-ink no-underline transition hover:-translate-y-0.5 hover:border-brass">
+    ${img(mount.image, '', 'size-28 object-contain')}<span>${esc(mount.name)}</span><small class="text-xs text-muted">${esc(mount.family ?? '')}</small></a>`;
 
 export const emptyState = (message) => `<p class="panel col-span-full p-6 text-center text-muted">${esc(message)}</p>`;
 

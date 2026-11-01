@@ -7,18 +7,17 @@ import { Monster } from '../monsters/monster.model.js';
 import { Mount } from '../mounts/mount.model.js';
 import * as dofusdude from './dofusdude.js';
 import * as dofusdb from './dofusdb.js';
-import type { ItemInput } from './dofusdude.js';
-import type { MonsterInput } from './dofusdb.js';
+import type { ItemInput, RawItem } from '../../interfaces/item.interface.js';
+import type { MonsterInput, RawMonster } from '../../interfaces/monster.interface.js';
 
 dotenv.config();
 
 const SET_IDS = [1, 4];
 const EXTRA_EQUIPMENT = ['Gelano', 'Dofus Émeraude', 'Dofus Pourpre', 'Dofus Turquoise', 'Épée de Boisaille', 'Bottes de Klime'];
 const MONSTER_NAMES = ['Bouftou', 'Boufton Blanc', 'Chef de Guerre Bouftou', 'Bouftou Royal', 'Tofu', 'Craqueleur', 'Dragon Cochon', 'Larve Bleue'];
-const MOUNT_COUNT = 8;
 
 async function collectItemsAndSets() {
-  const equipment = new Map<number, dofusdude.RawItem>();
+  const equipment = new Map<number, RawItem>();
   const sets = await Promise.all(SET_IDS.map(dofusdude.fetchSet));
   for (const set of sets) {
     for (const piece of await Promise.all(set.equipment_ids.map(dofusdude.fetchEquipment))) equipment.set(piece.ankama_id, piece);
@@ -44,7 +43,7 @@ async function collectItemsAndSets() {
 
 async function collectMonsters(items: ItemInput[]): Promise<MonsterInput[]> {
   const known = new Set(items.map((i) => i.ankamaId));
-  const raw = new Map<number, dofusdb.RawMonster>();
+  const raw = new Map<number, RawMonster>();
   for (const name of MONSTER_NAMES) {
     const hit = await dofusdb.findMonster(name);
     if (hit) raw.set(hit.id, hit);
@@ -72,7 +71,7 @@ async function main() {
   console.log(`Fetching Dofus ${await dofusdude.fetchVersion()} data...`);
   const { items, sets } = await collectItemsAndSets();
   const monsters = await collectMonsters(items);
-  const mounts = await dofusdude.fetchMounts(MOUNT_COUNT);
+  const mounts = await dofusdude.fetchMounts();
 
   await mongoose.connect(DATABASE_URL);
   try {

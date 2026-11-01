@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { Mount } from './mount.model.js';
-import { PUBLIC_FIELDS, firstString, nameFilter, paged, pagination } from '../../utils/query.js';
+import { PUBLIC_FIELDS, firstString, nameFilter, paged, pagination, parseAnkamaId } from '../../utils/query.js';
 
 const router = Router();
 
@@ -16,6 +16,20 @@ router.get('/', async (req, res) => {
     Mount.countDocuments(filter),
   ]);
   res.json(paged(mounts, total, page));
+});
+
+router.get('/:id', async (req, res) => {
+  const id = parseAnkamaId(req.params.id);
+  if (id === null) {
+    res.status(400).json({ error: 'id must be a positive integer' });
+    return;
+  }
+  const mount = await Mount.findOne({ ankamaId: id }, PUBLIC_FIELDS).lean();
+  if (!mount) {
+    res.status(404).json({ error: 'mount not found' });
+    return;
+  }
+  res.json(mount);
 });
 
 export default router;

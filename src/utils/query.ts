@@ -34,9 +34,22 @@ export function parseAnkamaId(value: string | undefined): number | null {
 
 const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
+const ACCENT_VARIANTS: Record<string, string> = {
+  a: 'aàâä',
+  c: 'cç',
+  e: 'eéèêë',
+  i: 'iîï',
+  o: 'oôö',
+  u: 'uùûü',
+  y: 'yÿ',
+};
+
+const accentInsensitive = (s: string) =>
+  escapeRegex(s.normalize('NFD').replace(/\p{M}/gu, '')).replace(/[aceiouy]/gi, (c) => `[${ACCENT_VARIANTS[c.toLowerCase()]}]`);
+
 export function nameFilter(q: unknown): Record<string, unknown> {
   const term = firstString(q)?.trim().slice(0, MAX_SEARCH_LENGTH);
-  return term ? { name: { $regex: escapeRegex(term), $options: 'i' } } : {};
+  return term ? { name: { $regex: accentInsensitive(term), $options: 'i' } } : {};
 }
 
 export function pagination(query: Record<string, unknown>, defaultLimit = 24) {
