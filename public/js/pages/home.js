@@ -1,8 +1,5 @@
 import { api, itemsById } from '../api.js';
-import { mapSvg } from '../map.js';
 import { emptyState, errorState, esc, fmtEffect, iconTile, itemCard, monsterCard, mountCard, plural, skeleton } from '../ui.js';
-
-document.getElementById('map').innerHTML = mapSvg();
 
 async function section(id, placeholder, render) {
   const el = document.getElementById(id);
